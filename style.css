@@ -2504,15 +2504,15 @@ body.theme-addict::before {
 
 /* ========== FONDOS POR CANCIÓN ========== */
 body.theme-loser {
-  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/loserbabycaratula.jpeg');
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('fondos/loser-bg.webp');
 }
 
 body.theme-poison {
-  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/poisoncaratula.jpeg');
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('fondos/poison-bg.jpeg');
 }
 
 body.theme-addict {
-  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/addictcaratula.jpeg');
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('fondos/addict-bg.png');
 }
 
 /* ========== VIDEOS DE FONDO ========== */
