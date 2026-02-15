@@ -11,6 +11,10 @@
   <link rel="preload" as="image" href="images/loserbabycaratula.jpeg">
   <link rel="preload" as="image" href="images/poisoncaratula.jpeg">
   <link rel="preload" as="image" href="images/addictcaratula.jpeg">
+  <link rel="preload" as="image" href="images/fatnuggets.webp">
+  <link rel="preload" as="image" href="images/alastor.webp">
+  <link rel="preload" as="image" href="images/angelpose.png">
+  <link rel="preload" as="image" href="images/huskyangel.png">
 </head>
 <body>
   <div id="app">
@@ -38,9 +42,9 @@
     </header>
 
     <div id="duo-intro" class="duo-intro">
-  <div class="intro-text" id="intro-text"></div>
-  <button id="enter-btn" class="enter-btn hidden">Entrar al Lounge</button>
-</div>
+      <div class="intro-text" id="intro-text"></div>
+      <button id="enter-btn" class="enter-btn hidden">Entrar al Lounge</button>
+    </div>
 
     <!-- ========== SECCIONES PRINCIPALES ========== -->
     
@@ -66,7 +70,7 @@
         </div>
       </div>
 
-      <!-- Playlist con tus imágenes y canciones -->
+      <!-- Playlist con tus imágenes y canciones (ÚNICO CAMBIO: audio/ → music/) -->
       <div class="playlist">
         <div class="playlist-header">
           <span>🎧 PLAYLIST OFICIAL</span>
@@ -74,7 +78,7 @@
         </div>
         
         <!-- Loser Baby -->
-        <div class="song-card" data-song="loser" data-url="music/loserbaby.mp3">
+        <div class="song-card" data-song="loser" data-url="/music/loserbaby.mp3">
           <div class="song-cover" style="background-image: url('images/loserbabycaratula.jpeg')"></div>
           <div class="song-info">
             <div class="song-title">Loser, Baby</div>
@@ -86,7 +90,7 @@
         </div>
 
         <!-- Poison -->
-        <div class="song-card" data-song="poison" data-url="music/poison.mp3">
+        <div class="song-card" data-song="poison" data-url="/music/poison.mp3">
           <div class="song-cover" style="background-image: url('images/poisoncaratula.jpeg')"></div>
           <div class="song-info">
             <div class="song-title">Poison</div>
@@ -98,7 +102,7 @@
         </div>
 
         <!-- Addict -->
-        <div class="song-card" data-song="addict" data-url="music/addict.mp3">
+        <div class="song-card" data-song="addict" data-url="/music/addict.mp3">
           <div class="song-cover" style="background-image: url('images/addictcaratula.jpeg')"></div>
           <div class="song-info">
             <div class="song-title">Addict</div>
@@ -145,8 +149,8 @@
       <div class="section-header">
         <h2 class="neon-title gold">🍸 HUSK'S BAR & GAMES</h2>
         <div class="bar-tabs">
-          <button class="tab-btn active" data-tab="drinks">🍹 Tragos</button>
-          <button class="tab-btn" data-tab="cocktail">🍸 Coctelería 3D</button> <!-- NUEVO ORDEN -->
+          <button class="tab-btn" data-tab="drinks">🍹 Tragos</button>
+          <button class="tab-btn" data-tab="cocktail">🍸 Coctelería 3D</button>
           <button class="tab-btn" data-tab="game1">🎲 High-Low</button>
           <button class="tab-btn" data-tab="game2">🃏 Blackjack</button>
           <button class="tab-btn" data-tab="slots">🎰 Tragaperras</button>
@@ -188,7 +192,7 @@
       </div>
 
       <!-- NUEVO: COCTELERÍA 3D INTERACTIVA -->
-      <div id="cocktail-tab" class="tab-content active">
+      <div id="cocktail-tab" class="tab-content">
         <div class="game-container glass">
           <div class="game-header">
             <h3>🍸 COCTELERÍA 3D DE HUSK</h3>
@@ -654,20 +658,36 @@
     </nav>
 
     <section id="duo-secret" class="section">
-  <div class="glass">
-    <h2 class="neon-title pink">🐱🩷 Even in Hell...</h2>
-    <p style="text-align:center; line-height:1.6;">
-      Aunque el infierno esté lleno de ruido...
-      <br>
-      siempre hay alguien que se queda.
-    </p>
-  </div>
-</section>
+      <div class="glass">
+        <h2 class="neon-title pink">🐱🩷 Even in Hell...</h2>
+        <p style="text-align:center; line-height:1.6;">
+          Aunque el infierno esté lleno de ruido...
+          <br>
+          siempre hay alguien que se queda.
+        </p>
+      </div>
+    </section>
 
     <!-- Reproductor de audio oculto -->
     <audio id="jukebox-audio" preload="metadata"></audio>
   </div>
-  
-  <script src="script.js"></script>
+  <!-- ========== VIDEOS DE FONDO ========== -->
+  <div class="video-overlay"></div>
+
+  <video id="video-loser" class="theme-video" autoplay muted loop playsinline preload="auto">
+    <source src="videos/loser-bg.mp4" type="video/mp4">
+    <source src="videos/loser-bg.webm" type="video/webm">
+  </video>
+
+  <video id="video-poison" class="theme-video" autoplay muted loop playsinline preload="auto">
+    <source src="videos/poison-bg.mp4" type="video/mp4">
+    <source src="videos/poison-bg.webm" type="video/webm">
+  </video>
+
+  <video id="video-addict" class="theme-video" autoplay muted loop playsinline preload="auto">
+    <source src="videos/addict-bg.mp4" type="video/mp4">
+    <source src="videos/addict-bg.webm" type="video/webm">
+  </video>
+    <script src="script.js"></script>
 </body>
 </html>
