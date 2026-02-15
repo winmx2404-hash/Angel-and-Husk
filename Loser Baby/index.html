@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>HAZBIN HOTEL · Husk & Angel Dust</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <!-- Precarga de imágenes -->
+  <link rel="preload" as="image" href="images/huskbartender.avif">
+  <link rel="preload" as="image" href="images/loserbabycaratula.jpeg">
+  <link rel="preload" as="image" href="images/poisoncaratula.jpeg">
+  <link rel="preload" as="image" href="images/addictcaratula.jpeg">
+</head>
+<body>
+  <div id="app">
+    <!-- ========== LOADING SCREEN ========== -->
+    <div id="loading-screen" class="loading-screen">
+      <div class="loading-content">
+        <div class="hellish-logo">🔥 HAZBIN HOTEL 🔥</div>
+        <div class="loading-bar">
+          <div class="loading-progress" id="loading-progress"></div>
+        </div>
+        <div class="loading-text">Cargando el infierno...</div>
+      </div>
+    </div>
+
+    <!-- ========== HEADER CON RELOJ INFERNAL ========== -->
+    <header class="glass-header">
+      <div class="header-left">
+        <i class="fas fa-skull"></i>
+        <span class="hotel-name">Hazbin Lounge</span>
+      </div>
+      <div class="header-right">
+        <div class="hell-clock" id="hell-clock">23:66</div>
+        <div class="sin-counter" id="sin-counter">❤️ 666</div>
+      </div>
+    </header>
+
+    <div id="duo-intro" class="duo-intro">
+  <div class="intro-text" id="intro-text"></div>
+  <button id="enter-btn" class="enter-btn hidden">Entrar al Lounge</button>
+</div>
+
+    <!-- ========== SECCIONES PRINCIPALES ========== -->
+    
+    <!-- LOUNGE / JUKEBOX -->
+    <section id="lounge" class="section active">
+      <div class="section-header">
+        <h2 class="neon-title">🎵 JUKEBOX INFERNAL</h2>
+        <div class="now-playing" id="now-playing">⏸️ Nada sonando</div>
+      </div>
+      
+      <div class="turntable-container">
+        <div class="turntable">
+          <div class="platter">
+            <div class="vinyl" id="vinyl">
+              <div class="vinyl-label" id="vinyl-label">HAZBIN</div>
+            </div>
+          </div>
+          <div class="tonearm" id="tonearm">
+            <div class="tonearm-base"></div>
+            <div class="tonearm-arm"></div>
+            <div class="tonearm-weight"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Playlist con tus imágenes y canciones -->
+      <div class="playlist">
+        <div class="playlist-header">
+          <span>🎧 PLAYLIST OFICIAL</span>
+          <span class="playlist-counter">3 canciones</span>
+        </div>
+        
+        <!-- Loser Baby -->
+        <div class="song-card" data-song="loser" data-url="audio/loserbaby.mp3">
+          <div class="song-cover" style="background-image: url('images/loserbabycaratula.jpeg')"></div>
+          <div class="song-info">
+            <div class="song-title">Loser, Baby</div>
+            <div class="song-artist">Husk & Angel Dust</div>
+          </div>
+          <div class="song-control">
+            <button class="play-song-btn"><i class="fas fa-play"></i></button>
+          </div>
+        </div>
+
+        <!-- Poison -->
+        <div class="song-card" data-song="poison" data-url="audio/poison.mp3">
+          <div class="song-cover" style="background-image: url('images/poisoncaratula.jpeg')"></div>
+          <div class="song-info">
+            <div class="song-title">Poison</div>
+            <div class="song-artist">Angel Dust</div>
+          </div>
+          <div class="song-control">
+            <button class="play-song-btn"><i class="fas fa-play"></i></button>
+          </div>
+        </div>
+
+        <!-- Addict -->
+        <div class="song-card" data-song="addict" data-url="audio/addict.mp3">
+          <div class="song-cover" style="background-image: url('images/addictcaratula.jpeg')"></div>
+          <div class="song-info">
+            <div class="song-title">Addict</div>
+            <div class="song-artist">Angel Dust</div>
+          </div>
+          <div class="song-control">
+            <button class="play-song-btn"><i class="fas fa-play"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="volume-control">
+        <i class="fas fa-volume-down"></i>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.7">
+        <i class="fas fa-volume-up"></i>
+      </div>
+    </section>
+
+    <!-- SHOWROOM / GALERÍA -->
+    <section id="showroom" class="section">
+      <div class="section-header">
+        <h2 class="neon-title pink">📸 SHOWROOM</h2>
+        <div class="gallery-filter">
+          <button class="filter-btn active" data-filter="all">Todos</button>
+          <button class="filter-btn" data-filter="husk">Husk</button>
+          <button class="filter-btn" data-filter="angel">Angel</button>
+          <button class="filter-btn" data-filter="duo">Duo</button>
+          <button class="filter-btn" data-filter="secret">Secretos</button>
+        </div>
+      </div>
+
+      <div class="gallery-grid" id="gallery-grid"></div>
+
+      <!-- Modal para ver imágenes -->
+      <div id="image-modal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modal-image">
+        <div id="modal-caption"></div>
+      </div>
+    </section>
+
+    <!-- BAR SIMULATOR + JUEGOS -->
+    <section id="bar" class="section">
+      <div class="section-header">
+        <h2 class="neon-title gold">🍸 HUSK'S BAR & GAMES</h2>
+        <div class="bar-tabs">
+          <button class="tab-btn active" data-tab="drinks">🍹 Tragos</button>
+          <button class="tab-btn" data-tab="cocktail">🍸 Coctelería 3D</button> <!-- NUEVO ORDEN -->
+          <button class="tab-btn" data-tab="game1">🎲 High-Low</button>
+          <button class="tab-btn" data-tab="game2">🃏 Blackjack</button>
+          <button class="tab-btn" data-tab="slots">🎰 Tragaperras</button>
+          <button class="tab-btn" data-tab="dice">🎲 Dados</button>
+          <button class="tab-btn" data-tab="roulette">🔫 Ruleta</button>
+        </div>
+      </div>
+
+      <!-- TAB: TRAGOS (ORIGINAL) -->
+      <div id="drinks-tab" class="tab-content">
+        <div class="bar-container glass">
+          <div class="bar-header">
+            <img src="images/huskbartender.avif" alt="Husk" class="husk-avatar">
+            <div class="husk-speech" id="husk-speech">¿Qué quieres, idiota?</div>
+          </div>
+
+          <div class="drinks-menu">
+            <div class="drink-item" data-drink="whiskey">
+              <span class="drink-name">🥃 Whiskey del infierno</span>
+              <span class="drink-price">666 almas</span>
+            </div>
+            <div class="drink-item" data-drink="cocktail">
+              <span class="drink-name">🍹 Angel's Kiss</span>
+              <span class="drink-price">420 almas</span>
+            </div>
+            <div class="drink-item" data-drink="beer">
+              <span class="drink-name">🍺 Cerveza de Charlie</span>
+              <span class="drink-price">333 almas</span>
+            </div>
+            <div class="drink-item" data-drink="special">
+              <span class="drink-name">🎲 La casa nunca gana</span>
+              <span class="drink-price">? almas</span>
+            </div>
+          </div>
+
+          <button id="order-random-btn" class="order-btn">🍷 PEDIR TRAGO ALEATORIO</button>
+          <div id="drink-result" class="drink-result">...</div>
+        </div>
+      </div>
+
+      <!-- NUEVO: COCTELERÍA 3D INTERACTIVA -->
+      <div id="cocktail-tab" class="tab-content active">
+        <div class="game-container glass">
+          <div class="game-header">
+            <h3>🍸 COCTELERÍA 3D DE HUSK</h3>
+            <div class="game-subtitle">Mezcla tus propios tragos infernales</div>
+          </div>
+
+          <div class="cocktail-lab">
+            <!-- Vaso 3D -->
+            <div class="glass-container">
+              <div class="glass-3d" id="cocktail-glass">
+                <div class="glass-base"></div>
+                <div class="glass-stem"></div>
+                <div class="glass-bowl" id="glass-bowl">
+                  <div class="liquid" id="liquid" style="height: 30%; background: linear-gradient(145deg, #f0e68c, #d4af37);"></div>
+                  <div class="ice-cubes" id="ice-cubes"></div>
+                  <div class="garnish" id="garnish"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ingredientes -->
+            <div class="ingredients-panel">
+              <h4>🧪 INGREDIENTES</h4>
+              
+              <div class="ingredient-group">
+                <h5>BASE DE ALCOHOL</h5>
+                <div class="ingredient-buttons">
+                  <button class="ingredient-btn" data-type="base" data-ingredient="vodka" style="--btn-color: #3498db;">
+                    <span class="ingredient-icon">🥃</span>
+                    <span class="ingredient-name">Vodka</span>
+                  </button>
+                  <button class="ingredient-btn" data-type="base" data-ingredient="whiskey" style="--btn-color: #8b4513;">
+                    <span class="ingredient-icon">🥃</span>
+                    <span class="ingredient-name">Whiskey</span>
+                  </button>
+                  <button class="ingredient-btn" data-type="base" data-ingredient="rum" style="--btn-color: #d35400;">
+                    <span class="ingredient-icon">🥃</span>
+                    <span class="ingredient-name">Ron</span>
+                  </button>
+                  <button class="ingredient-btn" data-type="base" data-ingredient="gin" style="--btn-color: #27ae60;">
+                    <span class="ingredient-icon">🥃</span>
+                    <span class="ingredient-name">Ginebra</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="ingredient-group">
+                <h5>JUGOS Y MEZCLADORES</h5>
+                <div class="ingredient-buttons">
+                  <button class="ingredient-btn" data-type="mixer" data-ingredient="orange" style="--btn-color: #f39c12;">
+                    <span class="ingredient-icon">🍊</span>
+                    <span class="ingredient-name">Naranja</span>
+                  </button>
+                  <button class="ingredient-btn" data-type="mixer" data-ingredient="cranberry" style="--btn-color: #c0392b;">
+                    <span class="ingredient-icon">🍒</span>
+                    <span class="ingredient-name">Arándano</span>
+                  </button>
+                  <button class="ingredient-btn" data-type="mixer" data-ingredient="lime" style="--btn-color: #2ecc71;">
+                    <span class="ingredient-icon">🍋</span>
+                    <span class="ingredient-name">Limón</span>
+                  </button>
+                  <button class="ingredient-btn" data-type="mixer" data-ingredient="cola" style="--btn-color: #7f8c8d;">
+                    <span class="ingredient-icon">🥤</span>
+                    <span class="ingredient-name">Cola</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="ingredient-group">
+                <h5>EXTRAS</h5>
+                <div class="ingredient-buttons">
+                  <button class="ingredient-btn" data-type="extra" data-ingredient="ice" style="--btn-color: #bdc3c7;">
+                    <span class="ingredient-icon">🧊</span>
+                    <span class="ingredient-name">Hielo</span>
+                  </button>
+                  <button class="ingredient-btn" data-type="extra" data-ingredient="sugar" style="--btn-color: #ecf0f1;">
+                    <span class="ingredient-icon">🍚</span>
+                    <span class="ingredient-name">Azúcar</span>
+                  </button>
+                  <button class="ingredient-btn" data-type="extra" data-ingredient="mint" style="--btn-color: #27ae60;">
+                    <span class="ingredient-icon">🌿</span>
+                    <span class="ingredient-name">Menta</span>
+                  </button>
+                  <button class="ingredient-btn" data-type="extra" data-ingredient="cherry" style="--btn-color: #e74c3c;">
+                    <span class="ingredient-icon">🍒</span>
+                    <span class="ingredient-name">Cereza</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel de control -->
+            <div class="cocktail-controls">
+              <div class="current-recipe" id="current-recipe">
+                <span>🍹 Receta actual:</span>
+                <span id="recipe-display">Vacío</span>
+              </div>
+              
+              <div class="action-buttons">
+                <button class="mix-btn" id="mix-cocktail">
+                  <i class="fas fa-blender"></i> ¡MEZCLAR!
+                </button>
+                <button class="clear-btn" id="clear-cocktail">
+                  <i class="fas fa-trash"></i> LIMPIAR VASO
+                </button>
+              </div>
+            </div>
+
+            <!-- Resultado y mensaje de Husk -->
+            <div class="cocktail-result" id="cocktail-result">
+              <div class="result-message" id="cocktail-message">
+                Selecciona ingredientes y mézclalos
+              </div>
+              <div class="husk-comment" id="husk-comment">
+                😾 Husk te observa...
+              </div>
+            </div>
+
+            <!-- Recetario secreto -->
+            <div class="recipe-book">
+              <h4>📖 RECETARIO SECRETO</h4>
+              <div class="recipes-grid">
+                <div class="recipe-card" data-recipe="angel-kiss">
+                  <span class="recipe-name">Angel's Kiss</span>
+                  <span class="recipe-desc">Vodka + Arándano + Cereza</span>
+                </div>
+                <div class="recipe-card" data-recipe="husk-old">
+                  <span class="recipe-name">Husk's Old Fashioned</span>
+                  <span class="recipe-desc">Whiskey + Azúcar + Naranja</span>
+                </div>
+                <div class="recipe-card" data-recipe="alastor-radio">
+                  <span class="recipe-name">Radio Demon</span>
+                  <span class="recipe-desc">Ron + Cola + Limón</span>
+                </div>
+                <div class="recipe-card" data-recipe="charlie-hope">
+                  <span class="recipe-name">La Esperanza de Charlie</span>
+                  <span class="recipe-desc">Ginebra + Limón + Menta</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: JUEGO HIGH-LOW -->
+      <div id="game1-tab" class="tab-content">
+        <div class="game-container glass">
+          <h3>🎲 HIGH-LOW INFERNAL</h3>
+          <p class="game-desc">Adivina si la siguiente carta es mayor o menor</p>
+          
+          <div class="card-display">
+            <div class="current-card" id="current-card">?</div>
+          </div>
+
+          <div class="game-controls">
+            <button class="game-btn higher" id="higher-btn">⬆️ HIGHER</button>
+            <button class="game-btn lower" id="lower-btn">⬇️ LOWER</button>
+          </div>
+
+          <div class="game-stats">
+            <div class="score">Puntuación: <span id="game-score">0</span></div>
+            <div class="lives">Vidas: <span id="game-lives">3</span> ❤️</div>
+          </div>
+
+          <button class="new-game-btn" id="new-highlow">🔄 Nueva partida</button>
+          <div id="game-message" class="game-message"></div>
+        </div>
+      </div>
+
+      <!-- TAB: BLACKJACK -->
+      <div id="game2-tab" class="tab-content">
+        <div class="game-container glass">
+          <div class="game-header">
+            <h3>🃏 BLACKJACK DE HUSK</h3>
+            <div class="game-subtitle">Casino Infernal - Apuesta tu alma</div>
+          </div>
+
+          <div class="bj-table">
+            <div class="bj-hand dealer-hand">
+              <div class="hand-header">
+                <span class="hand-label">😾 HUSK</span>
+                <span class="hand-value-badge" id="dealer-value">0</span>
+              </div>
+              <div class="hand-cards" id="dealer-cards"></div>
+            </div>
+
+            <div class="bj-hand player-hand">
+              <div class="hand-header">
+                <span class="hand-label">👤 TÚ</span>
+                <span class="hand-value-badge" id="player-value">0</span>
+              </div>
+              <div class="hand-cards" id="player-cards"></div>
+            </div>
+
+            <div class="chip-stack">
+              <div class="chip chip-gold"></div>
+              <div class="chip chip-pink"></div>
+              <div class="chip chip-black"></div>
+            </div>
+          </div>
+
+          <div class="bj-controls">
+            <button class="bj-btn" id="hit-btn">
+              <i class="fas fa-plus-circle"></i> Pedir carta
+            </button>
+            <button class="bj-btn" id="stand-btn">
+              <i class="fas fa-hand-paper"></i> Plantarme
+            </button>
+          </div>
+
+          <div class="bj-status" id="bj-status">
+            <i class="fas fa-dice-d6"></i> ¡Bienvenido al casino de Husk!
+          </div>
+          
+          <button class="new-game-btn" id="new-blackjack">
+            <i class="fas fa-redo-alt"></i> Nuevo juego
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB: TRAGAPERRAS -->
+      <div id="slots-tab" class="tab-content">
+        <div class="game-container glass">
+          <div class="game-header">
+            <h3>🎰 TRAGAPERRAS DE HUSK</h3>
+            <div class="game-subtitle">Gira y gana almas... o pierde la tuya</div>
+          </div>
+
+          <div class="slot-machine">
+            <div class="slot-display">
+              <div class="slot-reel" id="reel1">🍺</div>
+              <div class="slot-reel" id="reel2">🍺</div>
+              <div class="slot-reel" id="reel3">🍺</div>
+            </div>
+
+            <div class="slot-info">
+              <div class="slot-balance">
+                <span>💰 Tus almas:</span>
+                <span id="player-souls">100</span>
+              </div>
+              <div class="slot-bet">
+                <span>🎲 Apuesta:</span>
+                <span id="current-bet">10</span>
+              </div>
+            </div>
+
+            <div class="bet-controls">
+              <button class="bet-btn" id="decrease-bet">-</button>
+              <span class="bet-display">10 almas</span>
+              <button class="bet-btn" id="increase-bet">+</button>
+            </div>
+
+            <button class="spin-btn" id="spin-slot">
+              <i class="fas fa-sync-alt"></i> ¡GIRAR!
+            </button>
+
+            <div class="slot-result" id="slot-result">
+              ¡Tira de la palanca!
+            </div>
+
+            <div class="prize-table">
+              <h4>🏆 PREMIOS</h4>
+              <div class="prize-row">
+                <span>🍺🍺🍺 3 Cervezas</span>
+                <span>+20 almas</span>
+              </div>
+              <div class="prize-row">
+                <span>🐱🐱🐱 3 Husk</span>
+                <span>+50 almas</span>
+              </div>
+              <div class="prize-row">
+                <span>💗💗💗 3 Angel</span>
+                <span>+100 almas</span>
+              </div>
+              <div class="prize-row">
+                <span>👑👑👑 3 Alastor</span>
+                <span>+200 almas</span>
+              </div>
+              <div class="prize-row">
+                <span>🎰🎰🎰 3 Jackpot</span>
+                <span>+500 almas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: DADOS DE ANGEL -->
+      <div id="dice-tab" class="tab-content">
+        <div class="game-container glass">
+          <div class="game-header">
+            <h3>🎲 DADOS DE ANGEL</h3>
+            <div class="game-subtitle">¿Te sientes con suerte, nena?</div>
+          </div>
+
+          <div class="dice-game">
+            <div class="dice-area">
+              <div class="dice-container">
+                <div class="dice" id="player-dice">
+                  <div class="dice-face" id="player-dice-face">⚀</div>
+                </div>
+                <span class="dice-label">TÚ</span>
+              </div>
+              
+              <div class="dice-vs">VS</div>
+              
+              <div class="dice-container">
+                <div class="dice" id="angel-dice">
+                  <div class="dice-face" id="angel-dice-face">⚁</div>
+                </div>
+                <span class="dice-label">ANGEL</span>
+              </div>
+            </div>
+
+            <div class="dice-info">
+              <div class="dice-balance">
+                <span>💖 Puntos:</span>
+                <span id="star-points">0</span>
+              </div>
+              <div class="dice-streak">
+                <span>🔥 Racha:</span>
+                <span id="win-streak">0</span>
+              </div>
+            </div>
+
+            <button class="dice-roll-btn" id="roll-dice">
+              <i class="fas fa-dice"></i> ¡TIRAR DADOS!
+            </button>
+
+            <div class="dice-history" id="dice-history">
+              <h4>📜 HISTORIAL</h4>
+              <div class="history-list" id="history-list">
+                <p class="history-item">¡Empieza a jugar!</p>
+              </div>
+            </div>
+
+            <div class="angel-message" id="angel-message">
+              "¿A que no me ganas, cariño?"
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: RULETA RUSA -->
+      <div id="roulette-tab" class="tab-content">
+        <div class="game-container glass">
+          <div class="game-header">
+            <h3>🔫 RULETA RUSA INFERNAL</h3>
+            <div class="game-subtitle">¿Te atreves a jugar contra Husk?</div>
+          </div>
+
+          <div class="roulette-game">
+            <!-- El revólver -->
+            <div class="gun-container">
+              <div class="gun" id="gun">
+                <div class="gun-barrel" id="gun-barrel"></div>
+                <div class="gun-cylinder" id="gun-cylinder">
+                  <div class="bullet-chamber" id="chamber1"></div>
+                  <div class="bullet-chamber" id="chamber2"></div>
+                  <div class="bullet-chamber" id="chamber3"></div>
+                  <div class="bullet-chamber" id="chamber4"></div>
+                  <div class="bullet-chamber" id="chamber5"></div>
+                  <div class="bullet-chamber" id="chamber6"></div>
+                </div>
+                <div class="gun-handle"></div>
+              </div>
+              <div class="bullet-indicator" id="bullet-indicator">
+                <span class="bullet-count">💀 1 bala</span>
+              </div>
+            </div>
+
+            <!-- Info del juego -->
+            <div class="roulette-info">
+              <div class="roulette-stats">
+                <div class="stat-item">
+                  <span>🎯 Victorias:</span>
+                  <span id="roulette-wins">0</span>
+                </div>
+                <div class="stat-item">
+                  <span>💀 Derrotas:</span>
+                  <span id="roulette-losses">0</span>
+                </div>
+                <div class="stat-item">
+                  <span>📊 Racha:</span>
+                  <span id="roulette-streak">0</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="roulette-actions">
+              <button class="roulette-btn spin-chamber" id="spin-chamber">
+                <i class="fas fa-sync-alt"></i> GIRAR RECÁMARA
+              </button>
+              <button class="roulette-btn pull-trigger" id="pull-trigger">
+                <i class="fas fa-crosshairs"></i> ¡DISPARAR!
+              </button>
+            </div>
+
+            <!-- Botón de nueva partida -->
+            <button class="new-game-btn" id="new-roulette">
+              <i class="fas fa-redo-alt"></i> NUEVA PARTIDA
+            </button>
+
+            <!-- Mensaje del juego -->
+            <div class="roulette-message" id="roulette-message">
+              ¡Gira la recámara y aprieta el gatillo!
+            </div>
+
+            <!-- Historia de Husk -->
+            <div class="husk-story" id="husk-story">
+              <p class="story-text">"Una bala, seis recámaras... ¿te sientes con suerte?"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECRETOS / EASTER EGGS -->
+    <section id="secrets" class="section">
+      <div class="section-header">
+        <h2 class="neon-title red">👻 SECRETOS</h2>
+      </div>
+
+      <div class="secrets-container">
+        <!-- Fat Nuggets -->
+        <div class="polaroid" id="easter-egg-1">
+          <div class="polaroid-img" style="background-image: url('images/fatnuggets.webp')"></div>
+          <div class="polaroid-caption">Fat Nuggets 🐷</div>
+        </div>
+
+        <!-- Alastor -->
+        <div class="polaroid" id="easter-egg-2">
+          <div class="polaroid-img" style="background-image: url('images/alastor.webp')"></div>
+          <div class="polaroid-caption">Alastor dice hola 📻</div>
+        </div>
+
+        <div class="secret-message" id="secret-message">
+          <p>Toca el logo de Husk 3 veces...</p>
+          <div class="husk-logo" id="husk-logo">🐱</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== DOCK DE NAVEGACIÓN ========== -->
+    <nav class="dock">
+      <button class="dock-btn active" data-section="lounge">
+        <i class="fas fa-record-vinyl"></i>
+        <span>Lounge</span>
+      </button>
+      <button class="dock-btn" data-section="showroom">
+        <i class="fas fa-images"></i>
+        <span>Showroom</span>
+      </button>
+      <button class="dock-btn" data-section="bar">
+        <i class="fas fa-cocktail"></i>
+        <span>Bar</span>
+      </button>
+      <button class="dock-btn" data-section="secrets">
+        <i class="fas fa-mask"></i>
+        <span>Secretos</span>
+      </button>
+    </nav>
+
+    <section id="duo-secret" class="section">
+  <div class="glass">
+    <h2 class="neon-title pink">🐱🩷 Even in Hell...</h2>
+    <p style="text-align:center; line-height:1.6;">
+      Aunque el infierno esté lleno de ruido...
+      <br>
+      siempre hay alguien que se queda.
+    </p>
+  </div>
+</section>
+
+    <!-- Reproductor de audio oculto -->
+    <audio id="jukebox-audio" preload="metadata"></audio>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backstage | Hazbin</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .gallery-container { padding: 20px; overflow-y: auto; height: 70vh; }
+        .polaroid {
+            background: #fff;
+            padding: 10px 10px 30px;
+            transform: rotate(-3deg);
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px #000;
+            border-radius: 2px;
+        }
+        .polaroid img { width: 100%; filter: sepia(0.3); }
+        .polaroid p { color: #222; font-family: 'Courier New'; font-weight: bold; margin-top: 10px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="app-frame">
+        <header>
+            <div class="logo-container">
+                <h1 class="pink">THE SHOWROOM</h1>
+                <span>Memorias del Pecado</span>
+            </div>
+        </header>
+
+        <main class="gallery-container">
+            <div class="polaroid">
+                <img src="https://i.pinimg.com/originals/8a/8a/7d/8a8a7d3639976378e90e7223b7625141.jpg" alt="Angel">
+                <p>Noches de Neón</p>
+            </div>
+            <div class="polaroid" style="transform: rotate(3deg);">
+                <img src="https://i.pinimg.com/736x/88/2c/8e/882c8e3e4f7a6f2c9e782633089d8920.jpg" alt="Husk">
+                <p>Cartas y Tragos</p>
+            </div>
+        </main>
+
+        <nav class="dock">
+            <a href="index.html" class="dock-item"><i class="fas fa-record-vinyl"></i></a>
+            <a href="backstage.html" class="dock-item active"><i class="fas fa-images"></i></a>
+            <a href="bar.html" class="dock-item"><i class="fas fa-glass-martini-alt"></i></a>
+        </nav>
+    </div>
+</body>
+</html>
