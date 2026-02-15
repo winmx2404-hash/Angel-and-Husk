@@ -2782,3 +2782,557 @@ body.theme-husk {
   100% { box-shadow: 0 0 0 rgba(255, 0, 85, 0); }
 }
 
+/* ========== FIX DE ESPACIADO ========== */
+
+/* Ajuste del body para header y dock fijos */
+body {
+  padding-top: 80px;           /* Espacio para el header fijo */
+  padding-bottom: 100px;       /* Espacio para el dock fijo */
+  min-height: 100vh;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Ajuste del header */
+.glass-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;                /* Altura fija del header */
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 2px solid var(--husk-gold);
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 2px 20px rgba(255, 0, 85, 0.3);
+}
+
+/* Ajuste del dock */
+.dock {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  height: 80px;                /* Altura fija del dock */
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 5px;
+  border-radius: 40px;
+  border: 2px solid var(--husk-gold);
+  box-shadow: 0 -5px 25px rgba(255, 0, 85, 0.5);
+  z-index: 1000;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Contenedor principal para el scroll */
+.section {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  max-width: 500px;
+  margin: 0 auto 20px auto;    /* Margen inferior */
+  padding: 20px 15px;          /* Padding interno */
+}
+
+.section.active {
+  display: block;
+  opacity: 1;
+}
+
+/* Ajuste para títulos grandes */
+.neon-title {
+  font-size: 1.3rem;
+  margin: 15px 0 20px 0;       /* Más espacio alrededor */
+  padding: 0 10px;
+  word-wrap: break-word;
+}
+
+/* Ajuste para el header-left */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.header-left i {
+  color: var(--angel-pink);
+  font-size: 1.5rem;
+  animation: pulse 2s infinite;
+}
+
+.hotel-name {
+  color: var(--husk-gold);
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-shadow: 0 0 5px var(--angel-pink);
+  white-space: nowrap;
+}
+
+/* Ajuste para el header-right */
+.header-right {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.hell-clock, .sin-counter {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--husk-gold);
+  font-size: 0.9rem;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
+  white-space: nowrap;
+}
+
+/* Ajuste para el scroll en móvil */
+html, body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ajuste para el último elemento de cada sección */
+.section > *:last-child {
+  margin-bottom: 30px;
+}
+
+/* Ajuste para contenedores con mucho contenido */
+.game-container,
+.bar-container,
+.slot-machine,
+.dice-game,
+.roulette-game,
+.cocktail-lab {
+  margin-bottom: 25px;
+  max-height: none;
+  overflow-y: visible;
+}
+
+/* Ajuste para listas largas */
+.playlist,
+.drinks-menu,
+.prize-table,
+.recipes-grid {
+  max-height: none;
+  overflow-y: visible;
+}
+
+/* Ajuste responsive para móviles pequeños */
+@media (max-width: 480px) {
+  body {
+    padding-top: 90px;         /* Más espacio en móviles */
+    padding-bottom: 100px;
+  }
+  
+  .glass-header {
+    height: 80px;              /* Header más alto en móviles */
+    padding: 8px 12px;
+  }
+  
+  .hotel-name {
+    font-size: 1rem;
+  }
+  
+  .hell-clock, .sin-counter {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+  }
+  
+  .dock {
+    height: 70px;
+    padding: 5px 3px;
+  }
+  
+  .dock-btn span {
+    font-size: 0.6rem;
+  }
+  
+  .dock-btn i {
+    font-size: 1.3rem;
+  }
+  
+  .neon-title {
+    font-size: 1.1rem;
+    margin: 10px 0 15px 0;
+  }
+}
+
+/* Ajuste para pantallas muy pequeñas */
+@media (max-width: 360px) {
+  body {
+    padding-top: 100px;
+  }
+  
+  .glass-header {
+    height: 90px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 8px;
+  }
+  
+  .header-left, .header-right {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .hotel-name {
+    font-size: 0.9rem;
+  }
+  
+  .dock {
+    height: 65px;
+  }
+  
+  .dock-btn i {
+    font-size: 1.2rem;
+  }
+  
+  .dock-btn span {
+    font-size: 0.55rem;
+  }
+}
+
+/* ========== ANIMACIÓN DE BIENVENIDA ========== */
+@keyframes welcomeFade {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes musicPulse {
+  0% { box-shadow: 0 0 10px var(--husk-gold); }
+  50% { box-shadow: 0 0 30px var(--angel-pink); }
+  100% { box-shadow: 0 0 10px var(--husk-gold); }
+}
+
+.song-card.playing {
+  animation: musicPulse 2s infinite;
+}
+
+/* Mejora visual al entrar */
+#enter-btn {
+  transition: all 0.5s cubic-bezier(.34,1.56,.64,1);
+}
+
+#enter-btn:hover {
+  transform: scale(1.1);
+  background: var(--angel-pink);
+  box-shadow: 0 0 40px var(--angel-pink);
+}
+
+/* ========== VINILO CON CARÁTULA ========== */
+
+.vinyl {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: relative;
+  transition: box-shadow 0.3s, background-image 0.5s ease;
+  overflow: hidden;
+  box-shadow: 0 0 0 4px var(--husk-gold), 0 0 30px var(--angel-pink);
+}
+
+/* La imagen de la carátula como fondo del vinilo */
+.vinyl.has-cover {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Efecto de vinilo (círculos concéntricos) sobre la imagen */
+.vinyl.has-cover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 30%, 
+    rgba(0,0,0,0.2) 0%, 
+    transparent 30%,
+    rgba(0,0,0,0.1) 70%,
+    rgba(0,0,0,0.4) 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Surcos del vinilo (líneas circulares) */
+.vinyl.has-cover::after {
+  content: '';
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  right: 5%;
+  bottom: 5%;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle at 30% 30%,
+    transparent 0px,
+    transparent 5px,
+    rgba(255,255,255,0.1) 5px,
+    rgba(255,255,255,0.1) 10px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Etiqueta central del vinilo */
+.vinyl-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, var(--husk-gold), #8b6b2b);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-weight: bold;
+  font-size: 0.7rem;
+  text-align: center;
+  border: 2px solid var(--angel-pink);
+  z-index: 10;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  backdrop-filter: blur(2px);
+}
+
+/* ========== TEMAS DINÁMICOS POR CANCIÓN ========== */
+
+/* Loser Baby - Tonos rosados/morados */
+body.theme-loser {
+  background: linear-gradient(135deg, #2a1a2a 0%, #4a1a3a 50%, #2a1a2a 100%);
+}
+
+.theme-loser .glass,
+.theme-loser .glass-header,
+.theme-loser .dock {
+  border-color: #ff99cc;
+  box-shadow: 0 0 20px #ff69b4;
+}
+
+.theme-loser .neon-title {
+  color: #ffb6c1;
+  text-shadow: 0 0 10px #ff1493, 0 0 20px #ff69b4;
+}
+
+.theme-loser .vinyl {
+  box-shadow: 0 0 0 4px #ff99cc, 0 0 40px #ff1493;
+}
+
+/* Poison - Tonos rojos intensos */
+body.theme-poison {
+  background: linear-gradient(135deg, #2a0a0a 0%, #5a0a0a 50%, #2a0a0a 100%);
+}
+
+.theme-poison .glass,
+.theme-poison .glass-header,
+.theme-poison .dock {
+  border-color: #ff4444;
+  box-shadow: 0 0 20px #ff0000;
+}
+
+.theme-poison .neon-title {
+  color: #ff8888;
+  text-shadow: 0 0 10px #ff0000, 0 0 20px #8b0000;
+}
+
+.theme-poison .vinyl {
+  box-shadow: 0 0 0 4px #ff4444, 0 0 40px #ff0000;
+}
+
+/* Addict - Tonos púrpura/azulados */
+body.theme-addict {
+  background: linear-gradient(135deg, #1a1a2a 0%, #2a1a4a 50%, #1a1a2a 100%);
+}
+
+.theme-addict .glass,
+.theme-addict .glass-header,
+.theme-addict .dock {
+  border-color: #aa88ff;
+  box-shadow: 0 0 20px #8a2be2;
+}
+
+.theme-addict .neon-title {
+  color: #b19cd9;
+  text-shadow: 0 0 10px #9400d3, 0 0 20px #4b0082;
+}
+
+.theme-addict .vinyl {
+  box-shadow: 0 0 0 4px #aa88ff, 0 0 40px #8a2be2;
+}
+
+/* Transición suave entre temas */
+body {
+  transition: background 1s ease;
+}
+
+.glass,
+.glass-header,
+.dock,
+.neon-title,
+.vinyl {
+  transition: all 0.5s ease;
+}
+
+/* ========== FONDOS POR CANCIÓN - CORREGIDO ========== */
+
+/* Fondo base con transición suave */
+body {
+  transition: background-image 1s ease-in-out;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+/* Usando las imágenes de la carpeta images/ (YA FUNCIONA) */
+body.theme-loser {
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/loserbabycaratula.jpeg');
+}
+
+body.theme-poison {
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/poisoncaratula.jpeg');
+}
+
+body.theme-addict {
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/addictcaratula.jpeg');
+}
+
+/* Si quieres usar la carpeta fondos/ (descomenta y comenta las de arriba) */
+
+body.theme-loser {
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('fondos/loser-bg.webp');
+}
+
+body.theme-poison {
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('fondos/poison-bg.jpg');
+}
+
+body.theme-addict {
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('fondos/addict-bg.jpg');
+}
+*/
+
+/* Overlay oscuro para que el texto se lea bien */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  pointer-events: none;
+  z-index: -1;
+  transition: background 0.5s ease;
+}
+
+/* Variante más oscura para cada tema */
+body.theme-loser::before {
+  background: rgba(255,105,180,0.2);
+}
+
+body.theme-poison::before {
+  background: rgba(255,0,0,0.2);
+}
+
+body.theme-addict::before {
+  background: rgba(138,43,226,0.2);
+}
+
+/* Ajuste de contraste para el texto */
+.glass {
+  background: rgba(0,0,0,0.7) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Animación de transición entre fondos */
+@keyframes bgTransition {
+  0% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
+
+.theme-loser, .theme-poison, .theme-addict {
+  animation: bgTransition 1.5s ease;
+}
+
+/* ========== VIDEOS DE FONDO POR CANCIÓN ========== */
+
+/* Contenedor de video para cada tema */
+.theme-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+  pointer-events: none;
+}
+
+.theme-video.active {
+  opacity: 1;
+}
+
+/* Overlay para mejorar legibilidad del texto */
+.video-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: -1;
+  pointer-events: none;
+  transition: background 0.5s ease;
+}
+
+/* Variantes de overlay por tema */
+body.theme-loser .video-overlay {
+  background: rgba(255, 105, 180, 0.3);
+}
+
+body.theme-poison .video-overlay {
+  background: rgba(255, 0, 0, 0.3);
+}
+
+body.theme-addict .video-overlay {
+  background: rgba(138, 43, 226, 0.3);
+}
+
+/* Fallback para móviles o conexiones lentas */
+@media (max-width: 768px) {
+  .theme-video {
+    display: none;
+  }
+  
+  body.theme-loser {
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/loserbabycaratula.jpeg');
+    background-size: cover;
+  }
+  
+  body.theme-poison {
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/poisoncaratula.jpeg');
+  }
+  
+  body.theme-addict {
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/addictcaratula.jpeg');
+  }
+}
