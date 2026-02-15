@@ -47,34 +47,16 @@ document.addEventListener('DOMContentLoaded', () => {
   initHighLow();
   initBlackjack();
   initSlots();
-  initDiceGame(); // NUEVA FUNCIÓN
+  initDiceGame();
+  initRoulette();
+  initCocktailLab();
   initSecrets();
   initClock();
-  checkAudioFiles();
+  initAutoPlay(); // <-- AÑADE ESTA LÍNEA
+  // initAutoPlayFast(); // Opcional: usa esta si quieres más rápido
 });
 
 // ========== VERIFICAR QUE LOS AUDIOS EXISTEN ==========
-function checkAudioFiles() {
-  const audioFiles = [
-    'audio/loserbaby.mp3',
-    'audio/poison.mp3',
-    'audio/addict.mp3'
-  ];
-  
-  audioFiles.forEach(file => {
-    fetch(file, { method: 'HEAD' })
-      .then(response => {
-        if (response.ok) {
-          console.log(`✅ Audio encontrado: ${file}`);
-        } else {
-          console.warn(`❌ Audio NO encontrado: ${file}`);
-        }
-      })
-      .catch(() => {
-        console.warn(`❌ No se puede acceder a: ${file}`);
-      });
-  });
-}
 
 // ========== LOADING SCREEN ==========
 function initLoadingScreen() {
@@ -196,9 +178,10 @@ function initAudio() {
     
     // Intentar cargar de nuevo con URL absoluta
     setTimeout(() => {
-      const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
+      let baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
+      if (!baseUrl.endsWith('/')) baseUrl += '/';
       const relativeUrl = currentAudio.src.split('/').pop();
-      const fullUrl = baseUrl + 'audio/' + relativeUrl;
+      const fullUrl = baseUrl + 'music/' + relativeUrl;
       console.log('Reintentando con URL absoluta:', fullUrl);
       currentAudio.src = fullUrl;
       currentAudio.load();
@@ -214,15 +197,18 @@ function initJukebox() {
 
   songCards.forEach((card) => {
     const btn = card.querySelector('.play-song-btn');
-    const songUrl = card.dataset.url; // Ej: "audio/loserbaby.mp3"
+    const songUrl = card.dataset.url; // Ej: "music/loserbaby.mp3"
     const songTitle = card.querySelector('.song-title').textContent;
 
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
 
       // Construir URL ABSOLUTA correcta
-      const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '');
-      const fullUrl = baseUrl + songUrl;
+      let baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
+      if (!baseUrl.endsWith('/')) baseUrl += '/';
+      let songPath = songUrl;
+      if (songPath.startsWith('/')) songPath = songPath.substring(1);
+      const fullUrl = baseUrl + songPath;
       
       console.log('Reproduciendo:', fullUrl);
       console.log('Base URL:', baseUrl);
@@ -295,10 +281,10 @@ function loadAndPlay(url, card, allCards, title) {
         document.getElementById('now-playing').innerHTML = '❌ No se puede reproducir';
         
         // Mostrar mensaje amigable al usuario
-        alert('No se pudo reproducir el audio. Verifica:\n' +
-              '1. Los archivos MP3 están en la carpeta /audio/\n' +
-              '2. Los nombres son: loserbaby.mp3, poison.mp3, addict.mp3\n' +
-              '3. GitHub Pages terminó de publicar (espera 2-3 minutos)');
+          alert('No se pudo reproducir el audio. Verifica:\n' +
+            '1. Los archivos MP3 están en la carpeta /music/\n' +
+            '2. Los nombres son: loserbaby.mp3, poison.mp3, addict.mp3\n' +
+            '3. GitHub Pages terminó de publicar (espera 2-3 minutos)');
       });
   }
 }
@@ -339,9 +325,9 @@ function fadeOutAndPause(card) {
 
 function checkAudioFiles() {
   const audioFiles = [
-    'audio/loserbaby.mp3',
-    'audio/poison.mp3',
-    'audio/addict.mp3'
+    'music/loserbaby.mp3',
+    'music/poison.mp3',
+    'music/addict.mp3'
   ];
   
   const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '');
@@ -364,22 +350,55 @@ function checkAudioFiles() {
   });
 }
 
-function applySongTheme(song) {
+// ========== FONDOS CON VIDEOS POR CANCIÓN ==========
+function applySongTheme(songUrl) {
+  // Remover clase de tema anterior
   document.body.classList.remove(
     "theme-loser",
     "theme-poison",
     "theme-addict"
   );
 
-  if (song.includes("loser")) {
+  // Ocultar todos los videos
+  document.querySelectorAll('.theme-video').forEach(video => {
+    video.classList.remove('active');
+    // Pausar y reiniciar para ahorrar recursos
+    video.pause();
+    video.currentTime = 0;
+  });
+
+  // Aplicar nuevo tema según la canción
+  if (songUrl.includes("loser")) {
     document.body.classList.add("theme-loser");
-  } else if (song.includes("poison")) {
+    updateVinylCover('loserbabycaratula.jpeg', 'Loser Baby');
+    
+    const video = document.getElementById('video-loser');
+    video.classList.add('active');
+    video.play().catch(e => console.log('Video loser no pudo reproducirse:', e));
+    
+    console.log('🎬 Video fondo: Loser Baby');
+    
+  } else if (songUrl.includes("poison")) {
     document.body.classList.add("theme-poison");
-  } else if (song.includes("addict")) {
+    updateVinylCover('poisoncaratula.jpeg', 'Poison');
+    
+    const video = document.getElementById('video-poison');
+    video.classList.add('active');
+    video.play().catch(e => console.log('Video poison no pudo reproducirse:', e));
+    
+    console.log('🎬 Video fondo: Poison');
+    
+  } else if (songUrl.includes("addict")) {
     document.body.classList.add("theme-addict");
+    updateVinylCover('addictcaratula.jpeg', 'Addict');
+    
+    const video = document.getElementById('video-addict');
+    video.classList.add('active');
+    video.play().catch(e => console.log('Video addict no pudo reproducirse:', e));
+    
+    console.log('🎬 Video fondo: Addict');
   }
 }
-
 
 // ========= JUKEBOX MEJORADA =========
 
@@ -485,21 +504,96 @@ function fadeOutAndPause(card) {
 
 // ========= TEMA DINÁMICO (DUO ANGEL x HUSK) =========
 
-function applySongTheme(song) {
+// ========== TEMAS DINÁMICOS CON CARÁTULAS ==========
+
+function applySongTheme(songUrl) {
+  // Limpiar temas anteriores
   document.body.classList.remove(
     "theme-loser",
     "theme-poison",
     "theme-addict"
   );
 
-  if (song.includes("loserbaby")) {
+  // Aplicar nuevo tema según la canción
+  if (songUrl.includes("loser")) {
     document.body.classList.add("theme-loser");
-  } 
-  else if (song.includes("poison")) {
+  } else if (songUrl.includes("poison")) {
     document.body.classList.add("theme-poison");
-  } 
-  else if (song.includes("addict")) {
+  } else if (songUrl.includes("addict")) {
     document.body.classList.add("theme-addict");
+  }
+}
+
+
+// Sobrescribe la función initJukebox para incluir la actualización del vinilo
+// Busca la función initJukebox() y REEMPLÁZALA con esta versión:
+
+function initJukebox() {
+  const songCards = document.querySelectorAll('.song-card');
+
+  songCards.forEach((card) => {
+    const btn = card.querySelector('.play-song-btn');
+    const songUrl = card.dataset.url;
+    const songTitle = card.querySelector('.song-title').textContent;
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+
+      const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '');
+      const fullUrl = baseUrl + songUrl;
+      
+      console.log('Reproduciendo:', fullUrl);
+
+      if (currentSong === fullUrl && isPlaying) {
+        fadeOut(() => {
+          card.classList.remove('playing');
+          currentAudio.pause();
+        });
+      } else {
+        switchSong(fullUrl, card, songCards, songTitle);
+      }
+    });
+
+    // Precargar metadata
+    const fullUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '') + songUrl;
+    const audio = new Audio();
+    audio.preload = 'metadata';
+    audio.src = fullUrl;
+  });
+}
+
+// También actualiza la función loadAndPlay para asegurar que se aplique el tema
+function loadAndPlay(url, card, allCards, title) {
+  clearInterval(fadeInterval);
+
+  currentAudio.pause();
+  // Mostrar en consola la ruta exacta que se intenta cargar
+  console.log('[DEBUG] Intentando cargar audio:', url);
+  currentAudio.src = url;
+  currentAudio.load();
+  
+  currentSong = url;
+
+  allCards.forEach(c => c.classList.remove('playing'));
+  card.classList.add('playing');
+
+  // Aplicar tema y carátula SIN bloquear la reproducción
+  setTimeout(() => applySongTheme(url), 0);
+
+  currentAudio.volume = 0;
+  
+  const playPromise = currentAudio.play();
+  
+  if (playPromise !== undefined) {
+    playPromise
+      .then(() => {
+        fadeIn(currentAudio);
+        console.log('✅ Reproduciendo correctamente:', url);
+      })
+      .catch(error => {
+        console.error('❌ Error al reproducir:', error);
+        document.getElementById('now-playing').innerHTML = '❌ No se puede reproducir';
+      });
   }
 }
 
@@ -1939,6 +2033,146 @@ function duoReaction(context) {
   return lines[Math.floor(Math.random() * lines.length)];
 }
 
+// ========== REPRODUCCIÓN AUTOMÁTICA AL ENTRAR ==========
+// ========== REPRODUCCIÓN AUTOMÁTICA CORREGIDA (SIN CONFLICTOS) ==========
+function initAutoPlay() {
+  const enterBtn = document.getElementById('enter-btn');
+  const introScreen = document.getElementById('duo-intro');
+  
+  if (!enterBtn) {
+    console.warn('⚠️ Botón "Entrar al Lounge" no encontrado');
+    return;
+  }
+
+  // Variable para asegurar que solo se intente UNA VEZ
+  let hasPlayed = false;
+
+  enterBtn.addEventListener('click', () => {
+    if (hasPlayed) return; // Si ya intentó, no hacer nada
+    hasPlayed = true;
+    
+    console.log('🎵 Intentando reproducción automática (única)...');
+    
+    // Desactivar el observer inmediatamente para evitar conflictos
+    if (observer) {
+      observer.disconnect();
+    }
+    
+    // Pequeña pausa para que la transición sea suave
+    setTimeout(() => {
+      playAutomatically();
+    }, 300);
+  });
+
+  // Observer solo como respaldo, pero DESACTIVADO después del primer uso
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      // Si ya se reprodujo, no hacer nada
+      if (hasPlayed) return;
+      
+      if (mutation.attributeName === 'style' && 
+          introScreen && 
+          introScreen.style.display === 'none') {
+        
+        console.log('🎵 Observer detectó intro ocultada, intentando reproducir...');
+        hasPlayed = true;
+        observer.disconnect(); // Desactivar observer inmediatamente
+        playAutomatically();
+      }
+    });
+  });
+
+  if (introScreen) {
+    observer.observe(introScreen, { attributes: true });
+  }
+
+  // Función centralizada para reproducir (EVITA DUPLICADOS)
+  function playAutomatically() {
+    const firstSongCard = document.querySelector('.song-card');
+    const playBtn = firstSongCard?.querySelector('.play-song-btn');
+    
+    if (!playBtn) {
+      console.warn('⚠️ No se encontró botón de reproducción');
+      return;
+    }
+
+    console.log('🎵 Iniciando reproducción con clic simulado');
+    
+    // SIMULAR CLIC es la forma MÁS SEGURA y confiable
+    playBtn.click();
+    
+    // Verificar que realmente empezó
+    setTimeout(() => {
+      if (currentAudio && currentAudio.paused) {
+        console.warn('⚠️ El clic no funcionó, intentando reproducción directa...');
+        
+        // Fallback: reproducción directa si el clic falló
+        const songUrl = firstSongCard.dataset.url;
+        const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '');
+        const fullUrl = baseUrl + songUrl;
+        
+        currentAudio.src = fullUrl;
+        currentAudio.volume = targetVolume;
+        
+        currentAudio.play()
+          .then(() => {
+            console.log('✅ Reproducción directa exitosa');
+            // Actualizar UI manualmente
+            document.querySelectorAll('.song-card').forEach(c => c.classList.remove('playing'));
+            firstSongCard.classList.add('playing');
+            document.getElementById('vinyl').classList.add('spin');
+            document.getElementById('tonearm').classList.add('playing');
+            document.getElementById('now-playing').innerHTML = '🎵 Sonando: Loser, Baby';
+            document.getElementById('vinyl-label').textContent = 'LOSER';
+          })
+          .catch(err => {
+            console.error('❌ Reproducción directa falló:', err);
+          });
+      } else if (currentAudio && !currentAudio.paused) {
+        console.log('✅ Reproducción iniciada correctamente');
+      }
+    }, 500);
+  }
+}
+
+// ========== VERSIÓN ALTERNATIVA (si quieres que empiece más rápido) ==========
+function initAutoPlayFast() {
+  const enterBtn = document.getElementById('enter-btn');
+  
+  if (!enterBtn) return;
+  
+  enterBtn.addEventListener('click', () => {
+    // Intentar reproducir inmediatamente
+    const firstSongCard = document.querySelector('.song-card');
+    const playBtn = firstSongCard?.querySelector('.play-song-btn');
+    const songUrl = firstSongCard?.dataset.url;
+    
+    if (playBtn) {
+      // Método 1: Simular clic
+      playBtn.click();
+    } else if (songUrl) {
+      // Método 2: Reproducir directamente
+      const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '');
+      const fullUrl = baseUrl + songUrl;
+      
+      currentAudio.src = fullUrl;
+      currentAudio.volume = targetVolume;
+      
+      currentAudio.play()
+        .then(() => {
+          console.log('✅ Reproducción directa exitosa');
+          document.getElementById('vinyl').classList.add('spin');
+          document.getElementById('tonearm').classList.add('playing');
+          document.getElementById('now-playing').innerHTML = '🎵 Sonando: Loser, Baby';
+          document.querySelector('.song-card').classList.add('playing');
+        })
+        .catch(err => {
+          console.warn('⚠️ Reproducción directa falló, usando clic simulado:', err);
+          playBtn.click();
+        });
+    }
+  });
+}
 
 // ========== FEEDBACK TÁCTIL ==========
 document.querySelectorAll('button, .drink-item, .polaroid, .gallery-card').forEach(el => {
