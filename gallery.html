@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Showroom | Angel Dust</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .scroll-view { padding: 20px; overflow-y: auto; flex: 1; padding-bottom: 100px; }
+        .promo-card { 
+            background: rgba(255,255,255,0.05); 
+            border-radius: 20px; 
+            overflow: hidden; 
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 0, 85, 0.3);
+        }
+        .promo-card img { width: 100%; display: block; filter: contrast(1.1); }
+        .promo-card h3 { padding: 15px; color: var(--angel-pink); font-family: 'Playfair Display'; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1 style="color: var(--angel-pink);">THE SHOWROOM</h1>
+        </header>
+
+        <main class="scroll-view">
+            <div class="promo-card">
+                <img src="https://i.pinimg.com/736x/88/2c/8e/882c8e3e4f7a6f2c9e782633089d8920.jpg" alt="Husk">
+                <h3>After Hours</h3>
+            </div>
+            <div class="promo-card">
+                <img src="https://i.pinimg.com/originals/8a/8a/7d/8a8a7d3639976378e90e7223b7625141.jpg" alt="Angel">
+                <h3>Spider's Web</h3>
+            </div>
+        </main>
+
+        <nav class="nav-dock">
+            <a href="index.html" class="nav-link"><i class="fas fa-compact-disc"></i></a>
+            <a href="gallery.html" class="nav-link active"><i class="fas fa-images"></i></a>
+            <a href="bar.html" class="nav-link"><i class="fas fa-cocktail"></i></a>
+        </nav>
+    </div>
+</body>
+</html>
